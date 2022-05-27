@@ -25,13 +25,14 @@ const checkLogin = async (req, res, next) => {
     next({message: 'username and password required'})
     return
   }
-  next()
+  
+  let alreadyExists = await Users.findBy({username}).first()
+  if(!alreadyExists){
+    next({status: 401, message: 'invalid credentials'})
+    return
+  }
 
-  // let alreadyExists = await Users.findBy({username}).first()
-  // if(!alreadyExists){
-  //   next({status: 401, message: 'invalid credentials'})
-  //   return
-  // }
+  next()
 }
 
 

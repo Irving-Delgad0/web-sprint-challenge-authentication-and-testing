@@ -85,11 +85,11 @@ router.post('/login', checkLogin, (req, res, next) => {
 
 const generateToken = (user) => {
   const payload = {
-    sub: user.id,
+    subject: user.user_id,
     username: user.username,
-  }
-  const options = {expiresIn: '1d'}
-  return jwt.sign(payload, JWT_SECRET, options)
+  }; 
+  const options = { expiresIn: '1d' };
+  return jwt.sign(payload, JWT_SECRET, options);
 }
 
 module.exports = router;
