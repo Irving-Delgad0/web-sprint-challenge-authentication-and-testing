@@ -62,13 +62,14 @@ describe('auth endpoints', () => {
   })
 
   describe('GET /api/jokes', () => {
-    
-    // test('returns data on successful call', async () => {
-    //   await request(server).post('/api/auth/register').send(user1)
-    //   await request(server).post('/api/auth/login').send(user1)
-    //   let res = request(server).get('/api/jokes')
-    //   expect(res).toHaveLength(3)
-    // })
+    beforeEach(async () => {
+      await request(server).post('/api/auth/register').send(user1)
+    })
+
+    test('returns data on successful call', async () => {
+      const res = await request(server).post('/api/auth/login').send(user1)
+      expect(res.status).toBe(200)
+    })
 
     test('returns correct error message if not logged in', async () => {
       let res = await request(server).get('/api/jokes')

@@ -25,13 +25,6 @@ const checkLogin = async (req, res, next) => {
     next({message: 'username and password required'})
     return
   }
-  
-  let alreadyExists = await Users.findBy({username}).first()
-  if(!alreadyExists){
-    next({status: 401, message: 'invalid credentials'})
-    return
-  }
-
   next()
 }
 
@@ -48,9 +41,8 @@ const restrict = async (req, res, next) => {
     req.decodedJwt = await jwt.verify(req.headers.authorization, JWT_SECRET)
   }catch(err){
     next({status: 401, message: "token invalid"})
-    return;
   }
-  next();
+  next()
   /*
   IMPLEMENT
   
