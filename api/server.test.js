@@ -68,7 +68,10 @@ describe('auth endpoints', () => {
 
     test('returns data on successful call', async () => {
       const res = await request(server).post('/api/auth/login').send(user1)
-      expect(res.status).toBe(200)
+      expect(res.body).toHaveProperty('token')
+      const response = await request(server).get('/api/jokes').set('authorization', res.body.token)
+      expect(response.status).toBe(200)
+      expect(response.body.length).toBe(3)
     })
 
     test('returns correct error message if not logged in', async () => {
